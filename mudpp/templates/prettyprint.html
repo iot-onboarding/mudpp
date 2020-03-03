@@ -31,15 +31,14 @@
     <section id="two" class="wrapper style2 alt">
       <div class="inner">
         <div class="content">
-          <h3>Enter filename:</h3>
-          <form action="/mudpp/" method="POST" target="mudppoutput" enctype="multipart/form-data"><br>
-            <p><br>
-            </p>
+          <p>
+            This tool provides you a human readable version of a MUD file.
+          </p>
+          <h3>Select MUD file:</h3>
+          <form action="/mudrest/mudpp" method="POST" target="mudppoutput" enctype="multipart/form-data"><br>
             <input name="mudfile" required="required" type="file"> <br>
             <br>
             <button type="submit" value="Upload" class="button special">Submit</button>
-            <p><br>
-            </p>
           </form>
         </div>
         <div class="content"><iframe name="mudppoutput" width="80%"></iframe><br>

@@ -8,7 +8,7 @@ app = Flask(__name__)
 def upload_form():
     return render_template('prettyprint.html')
     
-@app.route('/',methods=['POST'])
+@app.route('/mudpp',methods=['POST'])
 def mudpp():
     if request.files:
         mudfile=request.files['mudfile']
