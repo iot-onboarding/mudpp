@@ -41,7 +41,8 @@ def mudpp():
             return 'JSON not found', 400
         res = domudpp(mudjson)
         return res, 200
-    return "no files", 400
+    res="Not sure what I got: " + request.get_data(as_text=True)
+    return res, 400
 
 # if __name__ == '__main__':
 #    app.run(debug=False, port=5000)
