@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="/assets/css/main.css">
     <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
   </head>
-  <body> <!-- Banner -->
+  <body>
+    <!-- Banner -->
     <section id="banner">
       <div class="inner split">
         <section>
@@ -31,12 +32,20 @@
     <section id="two" class="wrapper style2 alt">
       <div class="inner">
         <div class="content">
-          <p>
-            This tool provides you a human readable version of a MUD file.
-          </p>
-          <h3>Select MUD file:</h3>
-          <form action="/mudrest/mudpp" method="POST" target="mudppoutput" enctype="multipart/form-data"><br>
-            <input name="mudfile" required="required" type="file"> <br>
+          <p> This tool provides you a human readable version of a MUD file. </p>
+          <h3>Select a MUD file</h3>
+          <form action="/mudrest/mudpp" method="POST" target="mudppoutput" enctype="multipart/form-data">
+            <input name="intype" id="selecturl" value="url"
+              type="radio" onclick="unhideURL()" checked>
+            <label for="selecturl">URL</label> <input name="intype" id="selectfile" value="file" 
+              type="radio" onclick="unhideFile()">
+            <label for="selectfile">File</label> <br>
+            <div id="use_url"> <input name="mudurl" size="60" maxlength="500" type="url">
+            </div>
+            <div id="use_file" style="visibility: hidden"> <input name="mudfile"
+                type="file">
+              <br>
+            </div>
             <br>
             <button type="submit" value="Upload" class="button special">Submit</button>
           </form>
@@ -80,5 +89,6 @@
     <script src="/assets/js/util.js"></script>
     <!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/mudextra.js"></script>
   </body>
 </html>
