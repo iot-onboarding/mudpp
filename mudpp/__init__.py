@@ -1,9 +1,10 @@
 from flask import Flask,request,redirect,render_template
 from mudpp.mudpp import domudpp
 from tempfile import NamedTemporaryFile
-import json
+import json, requests
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 @app.route('/',methods=['GET'])
 @app.route('/mudpp',methods=['GET'])
@@ -19,19 +20,30 @@ def upload_bform():
 @app.route('/mudpp',methods=['POST'])
 @app.route('/mudpp/',methods=['POST'])
 def mudpp():
-    if request.files:
-        mudfile=request.files['mudfile']
-        if mudfile.filename != '':
-            tempfile=NamedTemporaryFile(delete=False)
-            mudfile.save(tempfile.name)
-            tempfile.seek(0)
+    rtype=request.form.get('intype')
+    if rtype == 'file':
+        if request.files:
+            mudfile=request.files['mudfile']
+            if mudfile.filename != '':
+                tempfile=NamedTemporaryFile(delete=False)
+                mudfile.save(tempfile.name)
+                tempfile.seek(0)
+                try:
+                    mudjson=json.load(tempfile)
+                    res=domudpp(mudjson)
+                    return res, 200
+                except:
+                    return 'Unable to load JSON file', 400
+    if rtype == 'mudurl':
+        mudurl=request.form.get('mudurl')
+        if mudurl != None:
             try:
-                mudjson=json.load(tempfile)
+                mudjson=json.loads(requests.get(mudurl).text)
                 res=domudpp(mudjson)
                 return res, 200
             except:
-                return 'Unable to load JSON file', 400
-        return "filename blank", 400
+                return "Something went wrong with URL", 400
+
     if request.content_type == 'application/json':
         try:
             mudjson = request.get_json()
